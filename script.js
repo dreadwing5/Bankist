@@ -14,6 +14,7 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
+const allSections = document.querySelectorAll('.section');
 
 const openModal = function () {
   modal.classList.remove('hidden');
@@ -93,7 +94,7 @@ tabsContainer.addEventListener('click', function (e) {
 });
 
 //Menu Fade animation
-
+//Clousre
 const handlHover = function (o) {
   return function (e) {
     if (e.target.classList.contains('nav__link')) {
@@ -130,3 +131,21 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 });
 
 headerObserver.observe(header);
+
+//Reveal Section
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  const section = entry.target;
+  if (!entry.isIntersecting) return;
+  section.classList.remove('section--hidden');
+  observer.unobserve(section);
+};
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
