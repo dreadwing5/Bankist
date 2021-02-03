@@ -15,6 +15,7 @@ const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('.nav');
 const allSections = document.querySelectorAll('.section');
+const imgTargets = document.querySelectorAll('img[data-src]');
 
 const openModal = function () {
   modal.classList.remove('hidden');
@@ -149,3 +150,29 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+//Lazy Loading images
+
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  const img = entry.target;
+  if (!entry.isIntersecting) return;
+
+  //Replace src with data-src
+  entry.target.src = img.dataset.src;
+
+  img.addEventListener('load', function () {
+    img.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
