@@ -47,6 +47,12 @@ message.innerHTML =
 //Add Cookie msg
 header.append(message);
 
+//Cookie Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px ';
+
 //Delete Element
 document
   .querySelector('.btn--close-cookie')
